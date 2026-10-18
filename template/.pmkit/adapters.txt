@@ -1,0 +1,20 @@
+# Adapter files that "python .pmkit/pmkit.py sync" writes from AGENTS.md.
+# Nothing is enabled by default. Enable a line only for a tool you use that does
+# not read AGENTS.md itself.
+#
+# Format: <path> [mode]     path relative to the project root, no spaces
+#   copy    (default) the whole of AGENTS.md under a GENERATED header
+#   import  a GENERATED header plus the line "@AGENTS.md", for tools that
+#           support @path imports (Claude Code does)
+# Text after # is ignored. Each generated file records a hash of its content;
+# sync refuses to overwrite a file that was edited by hand and shows the diff.
+#
+# Read AGENTS.md directly, so need no adapter (checked 2026-10-17; verify for your
+# version): Codex, Cursor, OpenCode, GitHub Copilot coding agent, and others.
+# Cursor's .cursor/rules/ folder is optional; pmkit does not generate it.
+#
+# Remove the leading "# " from the lines you need:
+#
+# CLAUDE.md import                     # Claude Code
+# GEMINI.md copy                       # Gemini CLI (or set its context file name to AGENTS.md instead)
+# .github/copilot-instructions.md copy # only for a Copilot surface that does not read AGENTS.md

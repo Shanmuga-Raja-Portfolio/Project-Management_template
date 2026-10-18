@@ -1,0 +1,115 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  linux:
+    name: Linux (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.8", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: RUNFILEs are up to date and within budget
+        run: python scripts/build_runfiles.py --check
+
+      - name: Shell scripts parse
+        run: |
+          status=0
+          for f in $(git ls-files '*.sh'); do bash -n "$f" || status=1; done
+          exit $status
+
+      - name: Minimal starter set passes pmkit check
+        run: |
+          dir="$RUNNER_TEMP/minimal"
+          bash scripts/new-project.sh --minimal --yes "$dir"
+          cd "$dir" && python .pmkit/pmkit.py check
+
+      - name: Full starter folder passes pmkit check
+        run: |
+          dir="$RUNNER_TEMP/full"
+          bash scripts/new-project.sh --yes "$dir"
+          cd "$dir" && python .pmkit/pmkit.py check
+
+      - name: Installers dry-run
+        run: |
+          for f in levels/2-starter-tools/installers/*.sh; do
+            echo "::group::$f"
+            bash "$f" --dry-run < /dev/null
+            echo "::endgroup::"
+          done
+          bash scripts/install-skill.sh --project "$RUNNER_TEMP/full" --dry-run < /dev/null
+
+      - name: Relative Markdown links resolve
+        shell: python
+        run: |
+          import pathlib, re, sys
+          bad = []
+          for md in pathlib.Path(".").rglob("*.md"):
+              if ".git" in md.parts:
+                  continue
+              text = md.read_text(encoding="utf-8")
+              text = re.sub(r"```.*?```", "", text, flags=re.S)
+              text = re.sub(r"`[^`\n]*`", "", text)
+              for target in re.findall(r"\]\(([^)\s]+)", text):
+                  path = target.split("#")[0]
+                  if path and not re.match(r"[a-z]+:", path) and not (md.parent / path).exists():
+                      bad.append("{}: {}".format(md, target))
+          print("\n".join(bad) or "All relative links resolve.")
+          sys.exit(1 if bad else 0)
+
+  windows:
+    name: Windows PowerShell 5.1
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: powershell
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: PowerShell scripts parse
+        run: |
+          $bad = 0
+          Get-ChildItem -Recurse -Filter *.ps1 | ForEach-Object {
+            $tokens = $null; $errors = $null
+            [void][System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$errors)
+            foreach ($e in $errors) { $bad++; Write-Output ("{0}:{1} {2}" -f $_.FullName, $e.Extent.StartLineNumber, $e.Message) }
+          }
+          if ($bad) { exit 1 }
+
+      - name: Minimal starter set passes pmkit check
+        run: |
+          $dir = Join-Path $env:RUNNER_TEMP 'minimal'
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts\new-project.ps1 -Minimal -Yes $dir
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Push-Location $dir
+          python .pmkit\pmkit.py check
+          $code = $LASTEXITCODE
+          Pop-Location
+          exit $code
+
+      - name: Installers dry-run
+        run: |
+          $failed = 0
+          Get-ChildItem levels\2-starter-tools\installers\*.ps1 | ForEach-Object {
+            Write-Output "== $($_.Name)"
+            powershell -NoProfile -ExecutionPolicy Bypass -File $_.FullName -DryRun
+            if ($LASTEXITCODE -ne 0) { $failed++ }
+          }
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts\install-skill.ps1 -Project (Join-Path $env:RUNNER_TEMP 'minimal') -DryRun
+          if ($LASTEXITCODE -ne 0) { $failed++ }
+          if ($failed) { exit 1 }

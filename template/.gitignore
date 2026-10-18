@@ -1,0 +1,7 @@
+# Added by pmkit. Keeps local environments and secrets out of git.
+.pmkit/venv-*/
+.pmkit/env/*.env
+.env
+.env.local
+!*.env.example
+__pycache__/
