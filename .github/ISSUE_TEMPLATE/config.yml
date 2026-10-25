@@ -1,5 +1,8 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
   - name: Contributing guide
     url: https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/blob/main/CONTRIBUTING.md
     about: How tool cards, the interview and the starter folder are kept accurate.
+  - name: Code of conduct concern (private)
+    url: https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/security/advisories/new
+    about: Report unacceptable behavior privately; mention "Code of conduct".

@@ -2,6 +2,20 @@
 
 Notable changes to pmkit. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2026-10-24
+
+Policies, enforcement and a docs site. No kit behavior changes.
+
+### Added
+
+- `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1), with a private reporting channel.
+- DCO sign-off: required in CONTRIBUTING, checked by a CI job on every pull request.
+- `docs/` landing page, published to GitHub Pages automatically on every push to `main`.
+
+### Changed
+
+- Blank issues disabled; the issue page now routes to the contributing guide and the conduct channel.
+
 ## [0.1.0] - 2026-10-17
 
 The first version. It is early, and untested parts are labelled.

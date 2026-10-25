@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pmkit — project setup for AI coding agents</title>
+<!--
+  pmkit docs landing page. Self-contained: no scripts, no fonts, no
+  external requests. Links go to the GitHub repository, where the
+  markdown files render.
+-->
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%}
+  body{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    background:#f6f7f9;color:#1f2937;line-height:1.6;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:3rem 1.25rem 4rem}
+  header{border-bottom:1px solid #e5e7eb;padding-bottom:1.5rem;margin-bottom:2rem}
+  h1{font-size:1.9rem;margin:0 0 .35rem;letter-spacing:-.01em}
+  .tag{margin:0;color:#4b5563;font-size:1.05rem}
+  h2{font-size:1.15rem;margin:2.2rem 0 .6rem;letter-spacing:-.01em}
+  p{margin:.6rem 0}
+  ol,ul{padding-left:1.4rem;margin:.5rem 0}
+  li{margin:.3rem 0}
+  a{color:#0f5bd7;text-decoration:none}
+  a:hover{text-decoration:underline}
+  table{border-collapse:collapse;width:100%;margin:.8rem 0;font-size:.95rem}
+  th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid #e5e7eb;vertical-align:top}
+  th{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:#6b7280}
+  code{background:#eef1f4;padding:.1rem .35rem;border-radius:4px;font-size:.9em}
+  .note{background:#eef7ee;border:1px solid #cde6cd;border-radius:8px;padding:.8rem 1rem;font-size:.95rem;margin:1.2rem 0}
+  footer{border-top:1px solid #e5e7eb;margin-top:3rem;padding-top:1rem;font-size:.85rem;color:#6b7280}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>pmkit</h1>
+  <p class="tag">Project setup for AI coding agents: a short interview, a proposal
+  you approve, and only the files you'll keep up.</p>
+</header>
+
+<p>pmkit sets up a project folder for your AI agent or chat model. It asks a
+few questions, shows you a proposal, and creates only the files you approve.
+Tools are optional and added later, only when a real need shows up.</p>
+
+<h2>Three ways to start</h2>
+<ol>
+  <li><strong>Paste a RUNFILE into any chat.</strong> No install. Each level has
+  one self-contained prompt: copy it from the repo and answer the questions.
+  <a href="https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/tree/main/levels">Level 1, 2 and 3 RUNFILEs</a>.</li>
+  <li><strong>Claude Code skill.</strong> Clone the repo, run
+  <code>bash scripts/install-skill.sh</code> (or the <code>.ps1</code> on
+  Windows), then say "set up this project" in your project folder.</li>
+  <li><strong>Copy the starter files yourself.</strong>
+  <code>bash scripts/new-project.sh --minimal /path/to/project</code> copies
+  the five core files. Existing files are never overwritten.</li>
+</ol>
+
+<h2>Pick your level</h2>
+<table>
+  <tr><th>Level</th><th>Suits</th><th>Time</th></tr>
+  <tr><td><a href="https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/blob/main/levels/1-starter/README.md">1. Starter</a></td>
+      <td>Most people. The safe default. Eight short questions, no tools.</td><td>5&ndash;15 min</td></tr>
+  <tr><td><a href="https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/blob/main/levels/2-starter-tools/README.md">2. Starter + tools</a></td>
+      <td>Code or document-heavy projects. Adds opt-in, ask-first installers for light tools.</td><td>15&ndash;40 min</td></tr>
+  <tr><td><a href="https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/blob/main/levels/3-interview/README.md">3. Interview-led</a></td>
+      <td>Larger projects, handoffs, inherited repos. Full interview; plan only, or plan plus files.</td><td>30&ndash;60 min</td></tr>
+</table>
+
+<p>Not sure?
+<a href="https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/blob/main/START-HERE.md">START-HERE.md</a>
+asks three questions and picks for you. Browser chat only (ChatGPT, Claude.ai,
+Gemini)? You need just three small files — see the
+<a href="https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/blob/main/guides/chat-window.md">chat window guide</a>.</p>
+
+<div class="note"><strong>Privacy:</strong> every tool card lists the network
+calls a tool makes and the files it touches. Installers never ask for or store
+API keys. Nothing is sent to a cloud model unless you say it may.</div>
+
+<h2>In the repo</h2>
+<ul>
+  <li><a href="https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template">Repository</a> — code, issues, pull requests</li>
+  <li><a href="https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/blob/main/README.md">README</a> — full overview, layers, local models, disclaimer</li>
+  <li><a href="https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/blob/main/CONTRIBUTING.md">Contributing</a> and
+      <a href="https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/blob/main/CODE_OF_CONDUCT.md">Code of conduct</a></li>
+  <li><a href="https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/blob/main/CHANGELOG.md">Changelog</a> — what changed, version by version</li>
+  <li>License: <a href="https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/blob/main/LICENSE">MIT</a></li>
+</ul>
+
+<footer>
+  pmkit is independent of every tool it catalogues. Read each tool card and the
+  upstream README before installing anything. Status: v0.1.1, early; untested
+  parts are labelled in the docs.
+</footer>
+
+</div>
+</body>
+</html>

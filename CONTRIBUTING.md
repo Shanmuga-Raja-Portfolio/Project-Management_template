@@ -10,6 +10,7 @@ Thank you for helping. This kit is only useful while it stays accurate, short an
 - **No marketing words or emoji.** No "supercharge", "unlock", "revolutionary", "10x", "second brain" or "OS" language.
 - **No upsell.** No affiliate links, paid courses, key resellers or referral codes.
 - **Plain English.** Short sentences. Say what a thing does and what it does not do.
+- **Sign off your commits (DCO).** No CLA, ever — your contribution stays yours. Run `git commit -s` so the commit carries a `Signed-off-by:` line certifying you wrote it or may submit it under this project's license. CI checks for it.
 
 ## Adding a tool card
 
@@ -86,6 +87,7 @@ If you change a `.sh` installer, update the matching `.ps1` too (and the other w
 Copy this into your PR description.
 
 ```markdown
+- [ ] Every commit is signed off (`git commit -s`, DCO); CI's sign-off check passes
 - [ ] Every new fact links to an upstream source; anything unconfirmed is marked "unverified"
 - [ ] No benchmarks, star counts, marketing words or emoji
 - [ ] Tool cards include "What it does NOT do", network calls, files touched, and a "Checked:" date
@@ -94,6 +96,7 @@ Copy this into your PR description.
 - [ ] Question headings, `Levels:` lines, MAPPING section titles and card headings kept in the format the build script reads
 - [ ] Optional-file lines in template files carry a `<!-- needs: ... -->` marker
 - [ ] No placeholder org names in URLs; repo links use https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template
+- [ ] Code of Conduct read and followed
 - [ ] RUNFILEs regenerated; `python scripts/build_runfiles.py --check` passes (including size budgets)
 - [ ] `python .pmkit/pmkit.py check` passes inside template/ (warnings about `<fill in` placeholders are expected there)
 - [ ] .sh and .ps1 installers still match (if changed); dry-run tested

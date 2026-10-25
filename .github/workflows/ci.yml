@@ -113,3 +113,70 @@ jobs:
           powershell -NoProfile -ExecutionPolicy Bypass -File scripts\install-skill.ps1 -Project (Join-Path $env:RUNNER_TEMP 'minimal') -DryRun
           if ($LASTEXITCODE -ne 0) { $failed++ }
           if ($failed) { exit 1 }
+
+  # ---- DCO: contributions must be signed off ---------------------------
+  signoff:
+    name: DCO sign-off check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          # Check out the PR head, not the synthetic merge commit (which has
+          # no Signed-off-by and would fail every PR).
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Verify every commit is signed off
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          bad=$(git log --format='%H%x00%B%x00END%x00' \
+                  "origin/${{ github.base_ref }}..HEAD" | \
+                python3 -c "
+          import sys
+          data = sys.stdin.read()
+          bad = []
+          for chunk in data.split('\x00END\x00'):
+              chunk = chunk.strip('\x00\n')
+              if not chunk:
+                  continue
+              sha, _, body = chunk.partition('\x00')
+              if 'Signed-off-by:' not in body:
+                  bad.append(sha)
+          print(' '.join(bad))
+          ")
+          if [ -n "$bad" ]; then
+            echo "Commits missing Signed-off-by: $bad"
+            echo "Fix: git rebase --signoff origin/${{ github.base_ref }}, then force-push."
+            exit 1
+          fi
+          echo "All commits signed off."
+
+  # ---- Deployment: docs site on GitHub Pages --------------------------
+  docs:
+    name: Deploy docs to GitHub Pages
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [linux, windows]
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: "docs"
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

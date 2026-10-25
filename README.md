@@ -4,12 +4,15 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![CI](https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/actions/workflows/ci.yml/badge.svg)](https://github.com/Shanmuga-Raja-Portfolio/Project-Management_template/actions/workflows/ci.yml)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
+[![Docs site](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://shanmuga-raja-portfolio.github.io/Project-Management_template/)
+
+**Docs site:** [shanmuga-raja-portfolio.github.io/Project-Management_template](https://shanmuga-raja-portfolio.github.io/Project-Management_template/) ·
+**Fastest start:** paste the [Level 1 RUNFILE](levels/1-starter/RUNFILE.md) into any chat and answer the questions.
 
 pmkit sets up a project folder for your AI agent or chat model. It asks a few questions, shows you a proposal, and creates only the files you approve. Tools are optional and added later, only when a real need shows up.
 
-**Fastest start:** paste the [Level 1 RUNFILE](levels/1-starter/RUNFILE.md) into any chat and answer the questions.
-
-Status: v0.1.0, early. Parts we have not tested are labelled "untested" or "unverified".
+Status: v0.1.1, early. Parts we have not tested are labelled "untested" or "unverified".
 
 ```mermaid
 flowchart LR

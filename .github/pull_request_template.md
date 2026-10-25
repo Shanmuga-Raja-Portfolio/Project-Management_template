@@ -1,5 +1,7 @@
 <!-- What changed and why, in a few lines. Link upstream sources for new facts. -->
 
+- [ ] Every commit is signed off (`git commit -s`, DCO)
+- [ ] Code of Conduct read and followed
 - [ ] New facts link to an upstream source; anything unconfirmed is marked "unverified"
 - [ ] No benchmarks, star counts, marketing words or emoji
 - [ ] Tool cards keep the template headings, "What it does NOT do", network calls, files touched and a "Checked:" date
